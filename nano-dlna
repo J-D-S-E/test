@@ -1,0 +1,1511 @@
+Repository: gabrielmagno/nano-dlna
+File: .gitignore
+
+# https://raw.githubusercontent.com/github/gitignore/master/Global/Archives.gitignore
+
+# It's better to unpack these files and commit the raw source because
+# git has its own built in compression methods.
+*.7z
+*.jar
+*.rar
+*.zip
+*.gz
+*.tgz
+*.bzip
+*.bz2
+*.xz
+*.lzma
+*.cab
+
+# Packing-only formats
+*.iso
+*.tar
+
+# Package management formats
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+*.msi
+*.msm
+*.msp
+
+
+# https://raw.githubusercontent.com/github/gitignore/master/Global/Linux.gitignore
+
+*~
+
+# Temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
+
+# https://raw.githubusercontent.com/github/gitignore/master/Global/Windows.gitignore
+
+# Windows thumbnail cache files
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+
+# https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore
+
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+
+# https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+
+
+Repository: gabrielmagno/nano-dlna
+File: .travis.yml
+
+language: python
+python:
+  - 2.7
+  - 3.5
+  - 3.6
+matrix:
+  fast_finish: true
+cache: pip
+install:
+  - pip install .
+  - pip install flake8
+script:
+  - nanodlna list
+  - flake8 setup.py nanodlna
+
+
+Repository: gabrielmagno/nano-dlna
+File: Dockerfile
+
+FROM python:3
+
+WORKDIR /usr/src/nano-dlna/
+COPY . /usr/src/nano-dlna/
+
+RUN pip install --no-cache .
+
+ENTRYPOINT [ "nanodlna" ]
+CMD [ "--help" ]
+
+
+Repository: gabrielmagno/nano-dlna
+File: LICENSE
+
+MIT License
+
+Copyright (c) 2015 Gabriel Magno
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+Repository: gabrielmagno/nano-dlna
+File: MANIFEST.in
+
+include LICENSE requirements.txt
+
+
+Repository: gabrielmagno/nano-dlna
+File: README.md
+
+nano-dlna
+=========
+
+[![Build Status](https://travis-ci.org/gabrielmagno/nano-dlna.svg?branch=master)](https://travis-ci.org/gabrielmagno/nano-dlna)
+[![PyPI](https://img.shields.io/pypi/v/nanodlna.svg)](https://pypi.python.org/pypi/nanodlna)
+[![License](https://img.shields.io/github/license/gabrielmagno/nano-dlna.svg)](https://github.com/gabrielmagno/nano-dlna/blob/master/LICENSE)
+
+A minimal UPnP/DLNA media streamer.
+
+nano-dlna is a command line tool that allows you to play a local video file in your TV (or any other DLNA compatible device).
+
+🦀 **Note**: also checkout [crab-dlna](https://github.com/gabrielmagno/crab-dlna), a Rust implementation of nano-dlna.
+
+Features
+--------
+- Searching available DLNA devices in the local network
+- Streaming audio
+- Streaming video, with subtitle support
+
+
+Usage
+-----
+
+### List
+
+Scan compatible devices and list the available ones:
+
+    nanodlna list
+
+If your device is not being listed, you might need to increase the search timeout:
+
+    nanodlna -t 20 list
+
+
+### Play
+
+Play a video, automatically loading the subtitles if available, selecting a random device:
+
+    nanodlna play That.Movie.mkv
+
+Play a video, specifying the device through query (scan devices before playing):
+
+    nanodlna play That.Movie.mkv -q "osmc"
+
+Play a video, specifying the device through its exact location (no scan, faster):
+
+    nanodlna play That.Movie.mkv -d "http://192.168.1.13:1082/"
+
+
+
+Installation
+------------
+
+nano-dlna can be installed as a regular python module by running:
+
+    $ [sudo] pip install nanodlna
+
+
+Technical Details
+-----------------
+
+nano-dlna is basically a one-file DLNA MediaServer and a self DLNA MediaController.
+
+How does `list` work?
+
+1. Issue an SSDP M-Search broadcast message in the network
+2. Capture the responses and register the devices
+3. Filter only devices that provide [UPnP's AVTransport service](http://www.upnp.org/specs/av/UPnP-av-AVTransport-v3-Service-20101231.pdf)
+
+
+How does `play` work?
+
+1. Setup an HTTP server to provide the media files to be streamed (including subtitles)
+2. Send a `SetAVTransportURI` message to the device, specifying the HTTP URLs of the media files
+3. Send a `Play` message to the device
+
+
+TODO
+----
+- [ ] Documentation
+- [ ] CLI interface to send controller actions (play, pause, stop, etc) to the MediaRenderer
+- [ ] CLI progress bar visualization
+- [ ] Playlist
+
+
+
+Repository: gabrielmagno/nano-dlna
+File: alternatives/bash/nano-dlna.sh
+
+#!/bin/bash
+
+gssdp-discover -n 5 | grep -A 1 "^  USN:.*urn:schemas-upnp-org:service:AVTransport" | sed -n 's/.*Location: \(.*\)/\1/p' > devices-ip.txt
+
+
+
+
+Repository: gabrielmagno/nano-dlna
+File: alternatives/gupnp_list_devices.py
+
+from gi.repository import GLib, GUPnP
+
+
+def device_available(cp, proxy):
+    print("Found " + proxy.get_friendly_name())
+
+
+#ctx = GUPnP.Context.new(None, "wlp3s0", 0)
+ctx = GUPnP.Context.new("wlp3s0", 0)
+cp = GUPnP.ControlPoint.new(ctx, "upnp:rootdevice")
+cp.set_active(True)
+cp.connect("device-proxy-available", device_available)
+
+GLib.MainLoop().run()
+
+
+Repository: gabrielmagno/nano-dlna
+File: alternatives/nodejs/index.js
+
+require('format-unicorn');
+var fs = require('fs');
+var path = require('path');
+var parseArgs = require('minimist');
+var finalhandler = require('finalhandler');
+var http = require('http');
+var ip = require('ip');
+var serveStatic = require('serve-static');
+var MediaRendererClient = require('upnp-mediarenderer-client');
+
+// Arguments
+var argv = parseArgs(process.argv.slice(2),
+                     opts = {'default': {
+                                 'folder'     : '/var/tmp/nano-dlna',
+                                 'metadata'   : 'data/metadata-video_subtitle.xml',
+                                 'file_video' : 'video.avi',
+                                 'file_sub'   : 'video.srt',
+                                 'file_cover' : 'cover.jpg',
+                             }
+                     });
+
+// HTTP media streaming server
+var http_port = 3000;
+var streaming_serve = serveStatic(argv['folder']);
+var streaming_server = http.createServer(function(req, res) {
+    var done = finalhandler(req, res);
+    streaming_serve(req, res, done);
+})
+streaming_server.listen(http_port);
+
+// URIs available
+var uri_base  = 'http://' + ip.address() + ':' + http_port + '/';
+var uris = {
+    'uri_video'  : uri_base + argv['file_video'],
+    'uri_sub'    : uri_base + argv['file_sub'],
+    'uri_cover'  : uri_base + argv['file_cover'],
+    'type_video' : path.extname(argv['file_video']).split('.')[1].toLowerCase(),
+    'type_sub'   : path.extname(argv['file_sub']).split('.')[1].toLowerCase()
+};
+
+// DLNA metadata
+var metadata_raw = fs.readFileSync(argv['metadata'], {'encoding': 'utf8'});
+var metadata_pretty = metadata_raw.formatUnicorn(uris);
+var metadata = metadata_pretty.replace(/\s{2,}/g, ' ').replace(/> </g, '><').trim();
+console.log(metadata_pretty);
+
+//// DLNA connection
+//var dlna_client = new MediaRendererClient(argv['media-renderer-url']);
+//dlna_client.load(uris['uri_video'], { autoplay: true, metadata: metadata }, function(err, result) {
+//    if(err) throw err
+//    console.log('playing ...')
+//});
+
+
+
+Repository: gabrielmagno/nano-dlna
+File: alternatives/nodejs/package.json
+
+{
+    "name": "nano-dlna",
+    "version": "0.0.3",
+    "description": "A minimal UPnP/DLNA media streamer",
+    "author": "gabrielmagno",
+    "license": "MIT",
+    "main": "nano_dlna.js",
+    "dependencies": {
+        "finalhandler": "~0.3.3",
+        "format-unicorn": "1.1.0",
+        "ip": "~0.3.2",
+        "minimist": "~1.1.0",
+        "serve-static": "~1.9.1",
+        "upnp-mediarenderer-client": "~0.0.3"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/gabrielmagno/nano-dlna.git"
+    },
+    "keywords": [
+        "upnp",
+        "dlna",
+        "mediarenderer",
+        "tv"
+    ]
+}
+
+
+
+Repository: gabrielmagno/nano-dlna
+File: alternatives/nodejs/run_node.sh
+
+#!/bin/bash
+
+npm install
+node index.js --media-renderer-url http://192.168.25.18:1579/ --folder VIDEOS --file_video movie.mkv --file_sub movie.srt
+
+
+
+Repository: gabrielmagno/nano-dlna
+File: alternatives/streaming_pure.py
+
+#!/usr/bin/env python3
+# encoding: UTF-8
+
+import http.server
+import os
+import re
+import socket
+import threading
+from http import HTTPStatus
+
+
+class StreamingHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+
+    __version___ = "1.0"
+
+    protocol_version = 'HTTP/1.1'
+
+    server_version = "StreamingHTTP/" + __version___
+
+    # timeout = 10
+    # timeout = 2
+
+    buffer_size = 2 * 1024 * 1024
+
+    def set_files(files):
+        files_index = {file_key: (os.path.basename(file_path),
+                                  os.path.abspath(file_path))
+                       for file_key, file_path in files.items()}
+        files_serve = {file_name: file_path
+                       for file_name, file_path in files_index.values()}
+        return files_index, files_serve
+
+    def do_GET(self):
+        f, start_range, end_range = self.send_head()
+        if f:
+            try:
+                f.seek(start_range, 0)
+                size = end_range - start_range + 1
+
+                # buf = f.read(size)
+                # sent = self.wfile.write(buf)
+
+                # TODO: improve buffered reading (it is slower than full
+                # reading)
+                while size > 0:
+                    buf = f.read(min(self.buffer_size, size))
+                    size -= len(buf)
+                    if not buf:
+                        break
+                    self.wfile.write(buf)
+
+            finally:
+                f.close()
+
+    def do_HEAD(self):
+        f, start_range, end_range = self.send_head()
+        if f:
+            f.close()
+
+    def send_head(self):
+        file_name = self.path[1:]
+        ctype = self.guess_type(file_name)
+        f = None
+
+        try:
+            file_path = self.files_serve[file_name]
+            f = open(file_path, 'rb')
+        except Exception:
+            self.send_error(HTTPStatus.NOT_FOUND, "File not found")
+            return (None, 0, 0)
+
+        try:
+            fs = os.fstat(f.fileno())
+            size_full = fs[6]
+
+            if "Range" in self.headers:
+                range_value = re.search(r"bytes=(?P<start>\d+)?-(?P<end>\d+)?",
+                                        self.headers["Range"])
+                start_range = max(int(range_value.group("start") or 0), 0)
+                end_range = min(int(range_value.group("end")
+                                    or (size_full - 1)), (size_full - 1))
+                size_partial = end_range - start_range + 1
+                assert size_partial > 0
+
+                self.send_response(HTTPStatus.PARTIAL_CONTENT)
+                self.send_header(
+                    "Content-Range",
+                    "bytes "
+                    "{0}-{1}/{2}".format(start_range, end_range, size_full))
+
+            else:
+                start_range = 0
+                end_range = size_full - 1
+                size_partial = size_full
+
+                self.send_response(HTTPStatus.OK)
+
+            self.send_header("Accept-Ranges", "bytes")
+            # self.send_header("Cache-Control", "public, max-age=0")
+            self.send_header(
+                "Last-Modified", self.date_time_string(fs.st_mtime))
+            self.send_header("Content-type", ctype)
+            self.send_header("Content-Length", str(size_partial))
+            self.send_header("Connection", "close")
+            self.end_headers()
+            return (f, start_range, end_range)
+        except Exception:
+            f.close()
+            raise
+
+
+def start_server(files, serve_ip, serve_port=9000):
+
+    httph = StreamingHTTPRequestHandler
+    httph_files = StreamingHTTPRequestHandler.set_files(files)
+    httph.files_index, httph.files_serve = httph_files
+
+    httpd = http.server.HTTPServer((serve_ip, serve_port), httph)
+    threading.Thread(target=httpd.serve_forever).start()
+
+    files_urls = {
+        file_key: "http://{0}:{1}/{2}".format(serve_ip, serve_port, file_name)
+        for file_key, (file_name, file_path) in httph.files_index.items()}
+
+    return files_urls
+
+
+def get_serve_ip(target_ip, target_port=80):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect((target_ip, target_port))
+    serve_ip = s.getsockname()[0]
+    s.close()
+    return serve_ip
+
+
+if __name__ == "__main__":
+
+    import sys
+
+    files = {"file_{0}".format(i): file_path for i,
+             file_path in enumerate(sys.argv[1:], 1)}
+
+    start_server(files, "localhost")
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/__init__.py
+
+# -*- coding: utf-8 -*-
+
+__title__ = 'nanodlna'
+__version__ = '0.2.1'
+__short_version__ = '.'.join(__version__.split('.')[:2])
+__author__ = 'Gabriel Magno'
+__license__ = 'MIT'
+__copyright__ = 'Copyright 2016, Gabriel Magno'
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/cli.py
+
+#!/usr/bin/env python3
+
+from __future__ import print_function
+
+import argparse
+import json
+import os
+import sys
+import signal
+import datetime
+import tempfile
+
+from . import devices, dlna, streaming
+
+import logging
+
+
+def set_logs(args):
+
+    log_filename = os.path.join(
+        tempfile.mkdtemp(),
+        "nanodlna-{}.log".format(
+            datetime.datetime.today().strftime("%Y-%m-%d_%H-%M-%S")
+        )
+    )
+
+    logging.basicConfig(
+        filename=log_filename,
+        filemode="w",
+        level=logging.INFO,
+        format="[ %(asctime)s ] %(levelname)s : %(message)s"
+    )
+
+    if args.debug_activated:
+        logging.getLogger().setLevel(logging.DEBUG)
+
+    print("nano-dlna log will be saved here: {}".format(log_filename))
+
+
+def get_subtitle(file_video):
+
+    video, extension = os.path.splitext(file_video)
+
+    file_subtitle = "{0}.srt".format(video)
+
+    if not os.path.exists(file_subtitle):
+        return None
+    return file_subtitle
+
+
+def list_devices(args):
+
+    set_logs(args)
+
+    logging.info("Scanning devices...")
+    my_devices = devices.get_devices(args.timeout, args.local_host)
+    logging.info("Number of devices found: {}".format(len(my_devices)))
+
+    for i, device in enumerate(my_devices, 1):
+        print("Device {0}:\n{1}\n\n".format(i, json.dumps(device, indent=4)))
+
+
+def find_device(args):
+
+    logging.info("Selecting device to play")
+
+    device = None
+
+    if args.device_url:
+        logging.info("Select device by URL")
+        device = devices.register_device(args.device_url)
+    else:
+        my_devices = devices.get_devices(args.timeout, args.local_host)
+
+        if len(my_devices) > 0:
+            if args.device_query:
+                logging.info("Select device by query")
+                device = [
+                    device for device in my_devices
+                    if args.device_query.lower() in str(device).lower()][0]
+            else:
+                logging.info("Select first device")
+                device = my_devices[0]
+
+    return device
+
+
+def play(args):
+
+    set_logs(args)
+
+    logging.info("Starting to play")
+
+    # Get video and subtitle file names
+
+    files = {"file_video": args.file_video}
+
+    if args.use_subtitle:
+
+        if not args.file_subtitle:
+            args.file_subtitle = get_subtitle(args.file_video)
+
+        if args.file_subtitle:
+            files["file_subtitle"] = args.file_subtitle
+
+    logging.info("Media files: {}".format(json.dumps(files)))
+
+    device = find_device(args)
+    if not device:
+        sys.exit("No devices found.")
+
+    logging.info("Device selected: {}".format(json.dumps(device)))
+
+    # Configure streaming server
+    logging.info("Configuring streaming server")
+
+    target_ip = device["hostname"]
+    if args.local_host:
+        serve_ip = args.local_host
+    else:
+        serve_ip = streaming.get_serve_ip(target_ip)
+    files_urls = streaming.start_server(files, serve_ip)
+
+    logging.info("Streaming server ready")
+
+    # Register handler if interrupt signal is received
+    signal.signal(signal.SIGINT, build_handler_stop(device))
+
+    # Play the video through DLNA protocol
+    logging.info("Sending play command")
+    dlna.play(files_urls, device)
+
+
+def build_handler_stop(device):
+    def signal_handler(sig, frame):
+
+        logging.info("Interrupt signal detected")
+
+        logging.info("Sending stop command to render device")
+        dlna.stop(device)
+
+        logging.info("Stopping streaming server")
+        streaming.stop_server()
+
+        sys.exit(
+            "Interrupt signal detected. "
+            "Sent stop command to render device and "
+            "stopped streaming. "
+            "nano-dlna will exit now!"
+        )
+    return signal_handler
+
+
+def pause(args):
+
+    set_logs(args)
+
+    logging.info("Selecting device to pause")
+    device = find_device(args)
+
+    # Pause through DLNA protocol
+    logging.info("Sending pause command")
+    dlna.pause(device)
+
+
+def stop(args):
+
+    set_logs(args)
+
+    logging.info("Selecting device to stop")
+    device = find_device(args)
+
+    # Stop through DLNA protocol
+    logging.info("Sending stop command")
+    dlna.stop(device)
+
+
+def run():
+
+    parser = argparse.ArgumentParser(
+        description="A minimal UPnP/DLNA media streamer.")
+    parser.set_defaults(func=lambda args: parser.print_help())
+    parser.add_argument("-H", "--host", dest="local_host")
+    parser.add_argument("-t", "--timeout", type=float, default=5)
+    parser.add_argument("-b", "--debug",
+                        dest="debug_activated", action="store_true")
+    subparsers = parser.add_subparsers(dest="subparser_name")
+
+    p_list = subparsers.add_parser('list')
+    p_list.set_defaults(func=list_devices)
+
+    p_play = subparsers.add_parser('play')
+    p_play.add_argument("-d", "--device", dest="device_url")
+    p_play.add_argument("-q", "--query-device", dest="device_query")
+    p_play.add_argument("-s", "--subtitle", dest="file_subtitle")
+    p_play.add_argument("-n", "--no-subtitle",
+                        dest="use_subtitle", action="store_false")
+    p_play.add_argument("file_video")
+    p_play.set_defaults(func=play)
+
+    p_pause = subparsers.add_parser('pause')
+    p_pause.add_argument("-d", "--device", dest="device_url")
+    p_pause.add_argument("-q", "--query-device", dest="device_query")
+    p_pause.set_defaults(func=pause)
+
+    p_stop = subparsers.add_parser('stop')
+    p_stop.add_argument("-d", "--device", dest="device_url")
+    p_stop.add_argument("-q", "--query-device", dest="device_query")
+    p_stop.set_defaults(func=stop)
+
+    args = parser.parse_args()
+
+    args.func(args)
+
+
+if __name__ == "__main__":
+
+    run()
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/devices.py
+
+#!/usr/bin/env python3
+# encoding: UTF-8
+
+import re
+import socket
+import struct
+import sys
+import xml.etree.ElementTree as ET
+
+if sys.version_info.major == 3:
+    import urllib.request as urllibreq
+    import urllib.parse as urllibparse
+else:
+    import urllib2 as urllibreq
+    import urlparse as urllibparse
+
+import logging
+import json
+
+SSDP_BROADCAST_PORT = 1900
+SSDP_BROADCAST_ADDR = "239.255.255.250"
+
+SSDP_BROADCAST_PARAMS = [
+    "M-SEARCH * HTTP/1.1",
+    "HOST: {0}:{1}".format(SSDP_BROADCAST_ADDR, SSDP_BROADCAST_PORT),
+    "MAN: \"ssdp:discover\"", "MX: 10", "ST: ssdp:all", "", ""]
+SSDP_BROADCAST_MSG = "\r\n".join(SSDP_BROADCAST_PARAMS)
+
+UPNP_DEVICE_TYPE = "urn:schemas-upnp-org:device:MediaRenderer:1"
+UPNP_SERVICE_TYPE = "urn:schemas-upnp-org:service:AVTransport:1"
+
+
+def get_xml_field_text(xml_root, query):
+    result = None
+    if xml_root:
+        node = xml_root.find(query)
+        result = node.text if node is not None else None
+    return result
+
+
+def register_device(location_url):
+
+    xml_raw = urllibreq.urlopen(location_url).read().decode("UTF-8")
+    logging.debug(
+        "Device to be registered: {}".format(
+            json.dumps({
+                "location_url": location_url,
+                "xml_raw": xml_raw
+            })
+        )
+    )
+
+    xml = re.sub(r"""\s(xmlns="[^"]+"|xmlns='[^']+')""", '', xml_raw, count=1)
+    info = ET.fromstring(xml)
+
+    location = urllibparse.urlparse(location_url)
+    hostname = location.hostname
+
+    device_root = info.find("./device")
+    if not device_root:
+        device_root = info.find(
+            "./device/deviceList/device/"
+            "[deviceType='{0}']".format(
+                UPNP_DEVICE_TYPE
+            )
+        )
+
+    friendly_name = get_xml_field_text(device_root, "./friendlyName")
+    manufacturer = get_xml_field_text(device_root, "./manufacturer")
+    action_url_path = get_xml_field_text(
+        device_root,
+        "./serviceList/service/"
+        "[serviceType='{0}']/controlURL".format(
+            UPNP_SERVICE_TYPE
+        )
+    )
+
+    if action_url_path is not None:
+        action_url = urllibparse.urljoin(location_url, action_url_path)
+    else:
+        action_url = None
+
+    device = {
+        "location": location_url,
+        "hostname": hostname,
+        "manufacturer": manufacturer,
+        "friendly_name": friendly_name,
+        "action_url": action_url,
+        "st": UPNP_SERVICE_TYPE
+    }
+
+    logging.debug(
+        "Device registered: {}".format(
+            json.dumps({
+                "device_xml": xml,
+                "device_info": device
+            })
+        )
+    )
+
+    return device
+
+
+def remove_duplicates(devices):
+    seen = set()
+    result_devices = []
+    for device in devices:
+        device_str = str(device)
+        if device_str not in seen:
+            result_devices.append(device)
+            seen.add(device_str)
+    return result_devices
+
+
+def get_devices(timeout=3.0, host=None):
+
+    if not host:
+        host = "0.0.0.0"
+    logging.debug("Searching for devices on {}".format(host))
+
+    logging.debug("Configuring broadcast message")
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+
+    # OpenBSD needs the ttl for the IP_MULTICAST_TTL as an unsigned char
+    ttl = struct.pack("B", 4)
+    s.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
+
+    s.bind((host, 0))
+
+    logging.debug("Sending broadcast message")
+    s.sendto(SSDP_BROADCAST_MSG.encode("UTF-8"), (SSDP_BROADCAST_ADDR,
+                                                  SSDP_BROADCAST_PORT))
+
+    logging.debug("Waiting for devices ({} seconds)".format(timeout))
+    s.settimeout(timeout)
+
+    devices = []
+    while True:
+
+        try:
+            data, addr = s.recvfrom(1024)
+        except socket.timeout:
+            break
+
+        try:
+            info = [a.split(":", 1)
+                    for a in data.decode("UTF-8").split("\r\n")[1:]]
+            device = dict([(a[0].strip().lower(), a[1].strip())
+                           for a in info if len(a) >= 2])
+            devices.append(device)
+            logging.debug(
+                "Device broadcast response: {}".format(
+                    json.dumps({
+                        "broadcast_message_raw": data.decode("UTF-8"),
+                        "broadcast_message_info": device
+                    })
+                )
+            )
+        except Exception:
+            pass
+
+    devices_urls = [
+        dev["location"]
+        for dev in devices
+        if "st" in dev and
+           "AVTransport" in dev["st"]
+    ]
+
+    devices = [
+        register_device(location_url)
+        for location_url in devices_urls
+    ]
+
+    devices = remove_duplicates(devices)
+
+    return devices
+
+
+if __name__ == "__main__":
+
+    timeout = int(sys.argv[1]) if len(sys.argv) >= 2 else 5
+
+    devices = get_devices(timeout, "0.0.0.0")
+
+    for i, device in enumerate(devices, 1):
+        print("Device {0}:\n{1}\n\n".format(i, json.dumps(device, indent=4)))
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/dlna.py
+
+#!/usr/bin/env python3
+# encoding: UTF-8
+
+import os
+import pkgutil
+import sys
+from xml.sax.saxutils import escape as xmlescape
+
+if sys.version_info.major == 3:
+    import urllib.request as urllibreq
+else:
+    import urllib2 as urllibreq
+
+import traceback
+import logging
+import json
+
+
+def send_dlna_action(device, data, action):
+
+    logging.debug("Sending DLNA Action: {}".format(
+        json.dumps({
+            "action": action,
+            "device": device,
+            "data": data
+        })
+    ))
+
+    action_data = pkgutil.get_data(
+        "nanodlna", "templates/action-{0}.xml".format(action)).decode("UTF-8")
+    if data:
+        action_data = action_data.format(**data)
+    action_data = action_data.encode("UTF-8")
+
+    headers = {
+        "Content-Type": "text/xml; charset=\"utf-8\"",
+        "Content-Length": "{0}".format(len(action_data)),
+        "Connection": "close",
+        "SOAPACTION": "\"{0}#{1}\"".format(device["st"], action)
+    }
+
+    logging.debug("Sending DLNA Request: {}".format(
+        json.dumps({
+            "url": device["action_url"],
+            "data": action_data.decode("UTF-8"),
+            "headers": headers
+        })
+    ))
+
+    try:
+        request = urllibreq.Request(device["action_url"], action_data, headers)
+        urllibreq.urlopen(request)
+        logging.debug("Request sent")
+    except Exception:
+        logging.error("Unknown error sending request: {}".format(
+            json.dumps({
+                "url": device["action_url"],
+                "data": action_data.decode("UTF-8"),
+                "headers": headers,
+                "error": traceback.format_exc()
+            })
+        ))
+
+
+def play(files_urls, device):
+
+    logging.debug("Starting to play: {}".format(
+        json.dumps({
+            "files_urls": files_urls,
+            "device": device
+        })
+    ))
+
+    video_data = {
+        "uri_video": files_urls["file_video"],
+        "type_video": os.path.splitext(files_urls["file_video"])[1][1:],
+    }
+
+    if "file_subtitle" in files_urls and files_urls["file_subtitle"]:
+
+        video_data.update({
+            "uri_sub": files_urls["file_subtitle"],
+            "type_sub": os.path.splitext(files_urls["file_subtitle"])[1][1:]
+        })
+
+        metadata = pkgutil.get_data(
+            "nanodlna",
+            "templates/metadata-video_subtitle.xml").decode("UTF-8")
+        video_data["metadata"] = xmlescape(metadata.format(**video_data))
+
+    else:
+        video_data["metadata"] = ""
+
+    logging.debug("Created video data: {}".format(json.dumps(video_data)))
+
+    logging.debug("Setting Video URI")
+    send_dlna_action(device, video_data, "SetAVTransportURI")
+    logging.debug("Playing video")
+    send_dlna_action(device, video_data, "Play")
+
+
+def pause(device):
+    logging.debug("Pausing device: {}".format(
+        json.dumps({
+            "device": device
+        })
+    ))
+    send_dlna_action(device, None, "Pause")
+
+
+def stop(device):
+    logging.debug("Stopping device: {}".format(
+        json.dumps({
+            "device": device
+        })
+    ))
+    send_dlna_action(device, None, "Stop")
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/streaming.py
+
+#!/usr/bin/env python3
+# encoding: UTF-8
+
+import os
+import socket
+import threading
+import unicodedata
+import re
+
+from twisted.internet import reactor
+from twisted.web.resource import Resource
+from twisted.web.server import Site
+from twisted.web.static import File
+
+import logging
+import json
+
+# from twisted.python import log
+
+
+def normalize_file_name(value):
+    value = unicodedata\
+        .normalize("NFKD", value)\
+        .encode("ascii", "ignore")\
+        .decode("ascii")
+    value = re.sub(r"[^\.\w\s-]", "", value.lower())
+    value = re.sub(r"[-\s]+", "-", value).strip("-_")
+    return value
+
+
+def set_files(files, serve_ip, serve_port):
+
+    logging.debug("Setting streaming files: {}".format(
+        json.dumps({
+            "files": files,
+            "serve_ip": serve_ip,
+            "serve_port": serve_port
+        })
+    ))
+
+    files_index = {file_key: (normalize_file_name(os.path.basename(file_path)),
+                              os.path.abspath(file_path),
+                              os.path.dirname(os.path.abspath(file_path)))
+                   for file_key, file_path in files.items()}
+
+    files_serve = {file_name: file_path
+                   for file_name, file_path, file_dir in files_index.values()}
+
+    files_urls = {
+        file_key: "http://{0}:{1}/{2}/{3}".format(
+            serve_ip, serve_port, file_key, file_name)
+        for file_key, (file_name, file_path, file_dir)
+        in files_index.items()}
+
+    logging.debug("Streaming files information: {}".format(
+        json.dumps({
+            "files_index": files_index,
+            "files_serve": files_serve,
+            "files_urls": files_urls
+        })
+    ))
+
+    return files_index, files_serve, files_urls
+
+
+def start_server(files, serve_ip, serve_port=9000):
+
+    # import sys
+    # log.startLogging(sys.stdout)
+
+    logging.debug("Starting to create streaming server")
+
+    files_index, files_serve, files_urls = set_files(
+        files, serve_ip, serve_port)
+
+    logging.debug("Adding files to HTTP server")
+    root = Resource()
+    for file_key, (file_name, file_path, file_dir) in files_index.items():
+        root.putChild(file_key.encode("utf-8"), Resource())
+        root.children[file_key.encode("utf-8")].putChild(
+            file_name.encode("utf-8"), File(file_path))
+
+    logging.debug("Starting to listen messages in HTTP server")
+    reactor.listenTCP(serve_port, Site(root))
+    threading.Thread(
+        target=reactor.run, kwargs={"installSignalHandlers": False}).start()
+
+    return files_urls
+
+
+def stop_server():
+    reactor.stop()
+
+
+def get_serve_ip(target_ip, target_port=80):
+    logging.debug("Identifying server IP")
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect((target_ip, target_port))
+    serve_ip = s.getsockname()[0]
+    s.close()
+    logging.debug("Server IP identified: {}".format(serve_ip))
+    return serve_ip
+
+
+if __name__ == "__main__":
+
+    import sys
+
+    files = {"file_{0}".format(i): file_path for i,
+             file_path in enumerate(sys.argv[1:], 1)}
+    print(files)
+
+    files_urls = start_server(files, "localhost")
+    print(files_urls)
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/templates/action-Pause.xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <u:Pause xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+      <InstanceID>0</InstanceID>
+    </u:Pause>
+  </s:Body>
+</s:Envelope>
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/templates/action-Play.xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <u:Play xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+      <InstanceID>0</InstanceID>
+      <Speed>1</Speed>
+    </u:Play>
+  </s:Body>
+</s:Envelope>
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/templates/action-SetAVTransportURI.xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <u:SetAVTransportURI xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+      <InstanceID>0</InstanceID>
+      <CurrentURI>{uri_video}</CurrentURI>
+      <CurrentURIMetaData>{metadata}</CurrentURIMetaData>
+    </u:SetAVTransportURI>
+  </s:Body>
+</s:Envelope>
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/templates/action-Stop.xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <u:Stop xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+      <InstanceID>0</InstanceID>
+    </u:Stop>
+  </s:Body>
+</s:Envelope>
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/templates/metadata-example1.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/" xmlns:sec="http://www.sec.co.kr/" xmlns:xbmc="urn:schemas-xbmc-org:metadata-1-0/">
+  <item id="videodb://movies/titles/1?xsp=%7b%22order%22%3a%7b%22direction%22%3a%22ascending%22%2c%22ignorefolders%22%3a0%2c%22method%22%3a%22sorttitle%22%7d%2c%22type%22%3a%22movies%22%7d" parentID="videodb://movies/titles/?xsp=%7b%22order%22%3a%7b%22direction%22%3a%22ascending%22%2c%22ignorefolders%22%3a0%2c%22method%22%3a%22sorttitle%22%7d%2c%22type%22%3a%22movies%22%7d" refID="videodb://movies/titles/1" restricted="1">
+    <dc:title>The Amazing Spider-Man 2</dc:title>
+    <dc:creator>Unknown</dc:creator>
+    <dc:date>2014-01-01</dc:date>
+    <upnp:actor role="Spider-Man / Peter Parker">Andrew Garfield</upnp:actor>
+    <upnp:actor role="Gwen Stacy">Emma Stone</upnp:actor>
+    <upnp:actor role="Electro / Max Dillon">Jamie Foxx</upnp:actor>
+    <upnp:actor role="Green Goblin / Harry Osborn">Dane DeHaan</upnp:actor>
+    <upnp:actor role="Donald Menken">Colm Feore</upnp:actor>
+    <upnp:actor role="Felicia">Felicity Jones</upnp:actor>
+    <upnp:actor role="Aleksei Sytsevich">Paul Giamatti</upnp:actor>
+    <upnp:actor role="Aunt May">Sally Field</upnp:actor>
+    <upnp:actor role="Mary Parker">Embeth Davidtz</upnp:actor>
+    <upnp:actor role="Richard Parker">Campbell Scott</upnp:actor>
+    <upnp:actor role="Dr. Ashley Kafka">Marton Csokas</upnp:actor>
+    <upnp:actor role="Man in Black Suit">Louis Cancelmi</upnp:actor>
+    <upnp:actor role="Young Peter Parker">Max Charles</upnp:actor>
+    <upnp:actor role="Kari">Sarah Gadon</upnp:actor>
+    <upnp:actor role="Graduation Guest">Stan Lee</upnp:actor>
+    <upnp:actor role="Norman Osborn">Chris Cooper</upnp:actor>
+    <upnp:actor role="Agent Berkley">Frank Deal</upnp:actor>
+    <upnp:actor role="Captain Stacy">Denis Leary</upnp:actor>
+    <upnp:actor role="Uncle Ben">Martin Sheen</upnp:actor>
+    <upnp:actor role="Flash Thompson">Chris Zylka</upnp:actor>
+    <upnp:actor role="Allistar Smythe">B. J. Novak</upnp:actor>
+    <upnp:author>Alex Kurtzman</upnp:author>
+    <upnp:author>Roberto Orci</upnp:author>
+    <upnp:author>Jeff Pinkner</upnp:author>
+    <upnp:director>Marc Webb</upnp:director>
+    <dc:publisher>Columbia Pictures</dc:publisher>
+    <upnp:genre>Action</upnp:genre>
+    <upnp:genre>Adventure</upnp:genre>
+    <upnp:genre>Fantasy</upnp:genre>
+    <upnp:albumArtURI dlna:profileID="JPEG_TN">http://192.168.1.4:1318/%25/972ECCF3ECA468CE8D3B03508FB74541/sxCWu1t1pcBl7L5ofOJQEY1v8tp.jpg</upnp:albumArtURI>
+    <dc:description>No more secrets.</dc:description>
+    <upnp:longDescription>For Peter Parker, life is busy. Between taking out the bad guys as Spider-Man and spending time with the person he loves, Gwen Stacy, high school graduation cannot come quickly enough. Peter has not forgotten about the promise he made to Gwen’s father to protect her by staying away, but that is a promise he cannot keep. Things will change for Peter when a new villain, Electro, emerges, an old friend, Harry Osborn, returns, and Peter uncovers new clues about his past.</upnp:longDescription>
+    <upnp:rating>Rated PG-13</upnp:rating>
+    <upnp:lastPlaybackPosition>617</upnp:lastPlaybackPosition>
+    <upnp:lastPlaybackTime>2015-02-25T02:16:38+00:00</upnp:lastPlaybackTime>
+    <upnp:playbackCount>0</upnp:playbackCount>
+    <upnp:episodeSeason>0</upnp:episodeSeason>
+    <res xmlns:pv="http://www.pv.com/pvns/" duration="2:21:34.000" resolution="1920x800" protocolInfo="http-get:*:video/mp4:DLNA.ORG_PN=MPEG4_P2_SP_AAC;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000" pv:subtitleFileUri="http://192.168.1.4:1318/%25/0D6BB987C1E6EA3A283CEDFE57FD26A7/The.Amazing.Spider.Man.2.2014.1080p.BluRay.x264.YIFY.srt" pv:subtitleFileType="srt">http://192.168.1.4:1318/%25/62920C8391193FEA076FCD856B44BD45/The.Amazing.Spider.Man.2.2014.1080p.BluRay.x264.YIFY.mp4</res>
+    <res protocolInfo="xbmc.org:*:fanart:*">http://192.168.1.4:1318/%25/A3C9A0DF20A3900ED5659D6C487C3B95/tmFDgDmrdp5DYezwpL0ymQKIbnV.jpg</res>
+    <res protocolInfo="xbmc.org:*:poster:*">http://192.168.1.4:1318/%25/972ECCF3ECA468CE8D3B03508FB74541/sxCWu1t1pcBl7L5ofOJQEY1v8tp.jpg</res>
+    <res protocolInfo="http-get:*:text/srt:*">http://192.168.1.4:1318/%25/0D6BB987C1E6EA3A283CEDFE57FD26A7/The.Amazing.Spider.Man.2.2014.1080p.BluRay.x264.YIFY.srt</res>
+    <res protocolInfo="http-get:*:smi/caption:*">http://192.168.1.4:1318/%25/0D6BB987C1E6EA3A283CEDFE57FD26A7/The.Amazing.Spider.Man.2.2014.1080p.BluRay.x264.YIFY.srt</res>
+    <sec:CaptionInfoEx sec:type="srt">http://192.168.1.4:1318/%25/0D6BB987C1E6EA3A283CEDFE57FD26A7/The.Amazing.Spider.Man.2.2014.1080p.BluRay.x264.YIFY.srt</sec:CaptionInfoEx>
+    <sec:CaptionInfo sec:type="srt">http://192.168.1.4:1318/%25/0D6BB987C1E6EA3A283CEDFE57FD26A7/The.Amazing.Spider.Man.2.2014.1080p.BluRay.x264.YIFY.srt</sec:CaptionInfo>
+    <xbmc:dateadded>2014-08-10</xbmc:dateadded>
+    <xbmc:rating>6.9</xbmc:rating>
+    <xbmc:votes>248,581</xbmc:votes>
+    <xbmc:artwork type="fanart">http://192.168.1.4:1318/%25/A3C9A0DF20A3900ED5659D6C487C3B95/tmFDgDmrdp5DYezwpL0ymQKIbnV.jpg</xbmc:artwork>
+    <xbmc:artwork type="poster">http://192.168.1.4:1318/%25/972ECCF3ECA468CE8D3B03508FB74541/sxCWu1t1pcBl7L5ofOJQEY1v8tp.jpg</xbmc:artwork>
+    <xbmc:uniqueidentifier>tt1872181</xbmc:uniqueidentifier>
+    <upnp:class>object.item.videoItem.movie</upnp:class>
+  </item>
+</DIDL-Lite>
+
+
+Repository: gabrielmagno/nano-dlna
+File: nanodlna/templates/metadata-video_subtitle.xml
+
+<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/" xmlns:sec="http://www.sec.co.kr/" xmlns:xbmc="urn:schemas-xbmc-org:metadata-1-0/">
+    <item id="0" parentID="-1" restricted="1">
+        <dc:title>nano-dlna Video</dc:title>
+        <res protocolInfo="http-get:*:video/{type_video}:" xmlns:pv="http://www.pv.com/pvns/" pv:subtitleFileUri="{uri_sub}" pv:subtitleFileType="{type_sub}">{uri_video}</res>
+        <res protocolInfo="http-get:*:text/srt:*">{uri_sub}</res>
+        <res protocolInfo="http-get:*:smi/caption:*">{uri_sub}</res>
+        <sec:CaptionInfoEx sec:type="{type_sub}">{uri_sub}</sec:CaptionInfoEx>
+        <sec:CaptionInfo sec:type="{type_sub}">{uri_sub}</sec:CaptionInfo>
+        <upnp:class>object.item.videoItem.movie</upnp:class>
+    </item>
+</DIDL-Lite>
+
+
+Repository: gabrielmagno/nano-dlna
+File: requirements.txt
+
+--e .
+
+
+Repository: gabrielmagno/nano-dlna
+File: setup.py
+
+#!/usr/bin/env python
+
+import sys
+
+from setuptools import setup
+
+
+_INSTALL_REQUIRES = [
+    'Twisted>=16.2.0',
+]
+if sys.version_info.major == 2:
+    _INSTALL_REQUIRES.append("service_identity>=16.0.0")
+
+setup(
+    name='nanodlna',
+    version='0.3.0',
+    description='A minimal UPnP/DLNA media streamer',
+    long_description="""nano-dlna is a command line tool that allows you to
+ play a local video file in your TV (or any other DLNA compatible device)""",
+    author='Gabriel Magno',
+    author_email='gabrielmagno1@gmail.com',
+    url='https://github.com/gabrielmagno/nano-dlna',
+    license='MIT',
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Multimedia :: Sound/Audio',
+        'Topic :: Multimedia :: Video',
+        'Topic :: Utilities'
+    ],
+    zip_safe=True,
+    packages=['nanodlna'],
+    package_dir={'nanodlna': 'nanodlna'},
+    package_data={'nanodlna': ['templates/*.xml']},
+    entry_points={
+        'console_scripts': [
+            'nanodlna = nanodlna.cli:run',
+        ]
+    },
+    install_requires=_INSTALL_REQUIRES
+)
+
+
